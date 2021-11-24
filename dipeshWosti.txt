@@ -1,0 +1,82 @@
+Puzzle 1 - Count rows of a csv file
+
+import csv
+
+with open("csv-sample.csv","r") as f:
+    reader = csv.reader(f,delimiter = ",")
+    data = list(reader)
+    row_count = len(data)
+print(row_count)
+
+
+
+
+
+Puzzle 2 - Build a Docker Image
+ Sorry, I do not have much idea about docker 
+ image.
+
+
+
+
+
+
+
+Puzzle 3 - Padlock
+
+numbers=[0,1,2,3,4,5,6,7,8,9]
+places=[1,2,3]
+
+wrong = int(input("Select three wrong digits:"))
+print(wrong)
+
+one_right_wrong_place1 = int(input("Select three digits with one right number in the wrong place:"))
+print(one_right_wrong_place1)
+
+one_right_wrong_place2 = int(input("Select another three digits with one right number in the wrong place:"))
+print(one_right_wrong_place2)
+
+one_right_right_place = int(input("Select three digits with one right number in the right place:"))
+print(one_right_right_place)
+
+two_right_wrong_place = int(input("Select three digits with two right numbers in the wrong place"))
+print(two_right_wrong_place)
+
+
+
+for w in str(wrong):
+    if int(w) in numbers:
+        numbers.remove(int(w))
+
+orrp = one_right_right_place
+orwp1 = one_right_wrong_place1
+orwp2 = one_right_wrong_place2
+
+for r in range(0,3):
+    if orrp%10 == orwp1%10 or orrp%10 == orwp2%10:
+        if orrp%10 in numbers:
+            numbers.remove(orrp%10)
+    orrp = orrp//10
+    orwp1 = orwp1//10
+    orwp2 = orwp2//10
+
+possibles=[]
+definitely=[]
+        
+for n in numbers:
+    if str(n) not in str(wrong)+str(one_right_wrong_place1)+str(one_right_wrong_place2)+str(one_right_right_place)+str(two_right_wrong_place):
+        numbers.remove(n)
+    if str(n) in str(one_right_right_place):
+        orrp = str(one_right_right_place).index(str(n))
+        places.remove(orrp+1)
+        numbers.remove(n)
+        definitely.append({orrp+1:n})
+
+
+
+for n in numbers:
+    for p in places:
+        possibles.append({p:n})
+
+print(possibles)
+
